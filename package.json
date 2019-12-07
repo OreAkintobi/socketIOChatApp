@@ -1,0 +1,23 @@
+{
+  "name": "socketiochatapp",
+  "version": "1.0.0",
+  "description": "chat app using socketio",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OreAkintobi/socketIOChatApp.git"
+  },
+  "author": "Ore Akintobi",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "*",
+    "express": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/OreAkintobi/socketIOChatApp/issues"
+  },
+  "homepage": "https://github.com/OreAkintobi/socketIOChatApp#readme"
+}
