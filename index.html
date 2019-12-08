@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            margin-top: 30px;
+        }
+
+        #messageArea {
+            display: none;
+        }
+    </style>
+    <title>Chat App</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="userFormArea" class="row">
+            <div class="col-md-12">
+                <form id="userForm" action="">
+                    <div class="form-group">
+                        <label for="">Enter Username</label>
+                        <input class="form-control" name="" id="username" />
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Login" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="messageArea" class="row">
+            <div class="col-md-4">
+                <div class="card card-body bg-light">
+                    <h3>Online Users</h3>
+                    <ul class="list-group" id="users">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="chat" id="chat"></div>
+                <form id="messageForm" action="">
+                    <div class="form-group">
+                        <label for="">Enter Message</label>
+                        <textarea class="form-control" name="" id="message" cols="30" rows="10"></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Send Message" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            var socket = io.connect();
+            var $messageForm = $("#messageForm");
+            var $message = $("#message");
+            var $chat = $("#chat");
+            var $messageFormArea = $("#messageFormArea");
+            var $userForm = $("#userForm");
+            var $userFormArea = $("#userFormArea");
+
+            $messageForm.submit(function (e) {
+                e.preventDefault();
+                socket.emit("send message", $message.val());
+                $message.val(" ");
+            });
+
+            socket.on('new message', function (data) {
+                $chat.append("<div class='card card-body bg-light'>" + data.msg + "</div>");
+            });
+        })
+    </script>
+</body>
+
+</html>
